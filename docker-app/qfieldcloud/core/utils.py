@@ -14,6 +14,7 @@ import mypy_boto3_s3
 from botocore.errorfactory import ClientError
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+from django.http import Http404
 
 from qfieldcloud.settings_utils import DjangoStorages
 
@@ -614,3 +615,7 @@ def get_file_storage_choices() -> list[tuple[str, str]]:
     """
     storages = list(settings.STORAGES.keys())[:-1]
     return [(storage, storage) for storage in storages]
+
+
+def blocked_view(request, *args, **kwargs):
+    raise Http404
